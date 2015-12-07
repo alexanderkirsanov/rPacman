@@ -6,6 +6,7 @@ class Map {
         this.level = Level;
         this.context = context;
         this.blockSize = size;
+        this.pillSize = 0;
         this.reset();
     }
 
@@ -65,15 +66,41 @@ class Map {
         });
     }
 
+    drawPills(context = this.context) {
+        let i, j;
+        if (this.pillSize > 30) {
+            this.pillSize = 0;
+        }
+
+        for (i = 0; i < this.height; i += 1) {
+            for (j = 0; j < this.width; j += 1) {
+                if (this.map[i][j] === PACMAN.PILL) {
+                    context.beginPath();
+
+                    context.fillStyle = Level.GENERAL_OPTIONS.background;
+                    context.fillRect((j * this.blockSize), (i * this.blockSize),
+                        this.blockSize, this.blockSize);
+
+                    context.fillStyle = Level.GENERAL_OPTIONS.pillColor;
+                    context.arc((j * this.blockSize) + this.blockSize / 2,
+                        (i * this.blockSize) + this.blockSize / 2,
+                        Math.abs(5 - (this.pillSize / 3)),
+                        0,
+                        Math.PI * 2, false);
+                    context.fill();
+                    context.closePath();
+                }
+            }
+        }
+    }
+
     drawBlock(y, x, context) {
-        var layout = this.map[y][x];
+        let layout = this.map[y][x];
 
         if (layout === PACMAN.PILL) {
             return;
         }
-
         context.beginPath();
-
         if (layout === PACMAN.EMPTY || layout === PACMAN.BOX ||
             layout === PACMAN.CAKE || layout === PACMAN.BONUS) {
 

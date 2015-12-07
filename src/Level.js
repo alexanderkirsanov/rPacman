@@ -132,6 +132,7 @@ const WALLS_OPTION = {
 };
 const GENERAL_OPTIONS = {
     background: '#0000ff',
-    blockColor: '#fff'
+    blockColor: '#fff',
+    pillColor: '#fff'
 };
 export default {MAP, WALLS, WALLS_OPTION, GENERAL_OPTIONS};

@@ -8,12 +8,3 @@ const PACMAN = {
 
 };
 export default PACMAN;
-
-
-/**
- Pacman.WALL    = 0;
- Pacman.BISCUIT = 1;
- Pacman.EMPTY   = 2;
- Pacman.BLOCK   = 3;
- Pacman.PILL    = 4;
- */
