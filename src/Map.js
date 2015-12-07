@@ -33,7 +33,7 @@ class Map {
 
     draw(context = this.context) {
         let i, j, size = this.blockSize;
-        context.fillStyle = '#000';
+        context.fillStyle = Level.GENERAL_OPTIONS.background;
         context.fillRect(0, 0, this.width * size, this.height * size);
         this.drawWall(context);
         for (i = 0; i < this.height; i++) {
@@ -65,8 +65,29 @@ class Map {
         });
     }
 
-    drawBlock(i, j, context) {
+    drawBlock(y, x, context) {
+        var layout = this.map[y][x];
 
+        if (layout === PACMAN.PILL) {
+            return;
+        }
+
+        context.beginPath();
+
+        if (layout === PACMAN.EMPTY || layout === PACMAN.BOX ||
+            layout === PACMAN.CAKE || layout === PACMAN.BONUS) {
+
+            context.fillStyle = Level.GENERAL_OPTIONS.background;
+            context.fillRect((x * this.blockSize), (y * this.blockSize),
+                this.blockSize, this.blockSize);
+
+            if (layout === PACMAN.CAKE) {
+                context.fillStyle = Level.GENERAL_OPTIONS.blockColor;
+                context.fillRect((x * this.blockSize) + (this.blockSize / 2.5),
+                    (y * this.blockSize) + (this.blockSize / 2.5),
+                    this.blockSize / 6, this.blockSize / 6);
+            }
+        }
     }
 }
 
