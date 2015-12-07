@@ -44,11 +44,9 @@ class Map {
     }
 
     drawWall(context) {
-        let i, j, p, line;
-
-        context.strokeStyle = '#0000FF';
-        context.lineWidth = 5;
-        context.lineCap = 'round';
+        context.strokeStyle = this.level.WALLS_OPTION.strokeStyle;
+        context.lineWidth = this.level.WALLS_OPTION.lineWidth;
+        context.lineCap = this.level.WALLS_OPTION.lineCap;
         Level.WALLS.forEach((line)=> {
             context.beginPath();
             line.forEach((p) => {
