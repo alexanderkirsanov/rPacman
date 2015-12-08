@@ -1,4 +1,4 @@
-import PACMAN from './Constants';
+import {PACMAN} from './Constants';
 import Level from './Level'
 let BLOCK_SIZE = 10;
 class Map {
