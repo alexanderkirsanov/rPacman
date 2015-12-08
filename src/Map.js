@@ -66,6 +66,22 @@ class Map {
         });
     }
 
+    block(position) {
+        return this.map[position.y][position.x];
+    }
+
+    setBlock(position, type) {
+        this.map[position.y][position.x] = type;
+    }
+
+    getHeight() {
+        return this.height;
+    }
+
+    getWidth() {
+        return this.width;
+    }
+
     drawPills(context = this.context) {
         let i, j;
         if (this.pillSize > 30) {
