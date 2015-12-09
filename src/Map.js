@@ -20,7 +20,7 @@ class Map {
         return y >= 0 && y < this.height && x >= 0 && x < this.width;
     }
 
-    isWall(position) {
+    isWallSpace(position) {
         return this.withinBounds(position.x, position.y) && this.map[position.y][position.x] === PACMAN.WALL;
     }
 

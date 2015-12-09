@@ -18,7 +18,10 @@ const GENERAL = {
     PLAYING: 7,
     COUNTDOWN: 8,
     EATEN_PAUSE: 9,
-    DYING: 10
+    DYING: 10,
+    color: {
+        PACMAN:"#FFFF00"
+    }
 };
 const KEY = {
     'BACKSPACE': 8,
