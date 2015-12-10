@@ -21,7 +21,8 @@ const GENERAL = {
     DYING: 10,
     color: {
         PACMAN:"#FFFF00"
-    }
+    },
+    FPS: 30
 };
 const KEY = {
     'BACKSPACE': 8,
