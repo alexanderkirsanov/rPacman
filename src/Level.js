@@ -126,13 +126,18 @@ const WALLS = [
         {'line': [10.5, 9.5]}]
 ];
 const WALLS_OPTION = {
-    strokeStyle: '#00FFFF',
+    strokeStyle: '#00ffFF',
     lineWidth: 5,
     lineCap: 'round'
+};
+const GHOST_OPTION = {
+    BLINK1: '#fff',
+    BLINK2: '#0000BB',
+    EATEN: '#222'
 };
 const GENERAL_OPTIONS = {
     background: '#0000ff',
     blockColor: '#fff',
     pillColor: '#fff'
 };
-export default {MAP, WALLS, WALLS_OPTION, GENERAL_OPTIONS};
+export default {MAP, WALLS, WALLS_OPTION, GHOST_OPTION, GENERAL_OPTIONS};

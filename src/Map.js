@@ -109,7 +109,9 @@ class Map {
             }
         }
     }
-
+    getBlockSize(){
+        return this.blockSize;
+    }
     drawBlock(y, x, context) {
         let layout = this.map[y][x];
 
