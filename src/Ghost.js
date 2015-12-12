@@ -176,4 +176,63 @@ class Ghost {
         context.closePath();
         context.fill();
     }
+
+    pane(position) {
+        if (position.y === 100 && position.x >= 190 && this.direction === GENERAL.RIGHT) {
+            return {y: 100, x: -10};
+        }
+        if (position.y === 100 && position.x <= -10 && this.direction === GENERAL.LEFT) {
+            this.position = {y: 100, x: 190};
+            return this.position;
+        }
+        return false;
+    };
+    move(context) {
+
+        let oldPos = this.position,
+            onGrid = this.onGridSquare(this.position),
+            npos   = null;
+
+        if (this.due !== this.direction) {
+
+            npos = this.getNewCoord(this.due, this.position);
+
+            if (onGrid &&
+                this.map.isFloorSpace({
+                    y:this.pointToCoord(this.nextSquare(npos.y, this.due)),
+                    x:this.pointToCoord(this.nextSquare(npos.x, this.due))})) {
+                this.direction = this.due;
+            } else {
+                npos = null;
+            }
+        }
+
+        if (npos === null) {
+            npos = this.getNewCoord(this.direction, this.position);
+        }
+
+        if (onGrid &&
+            this.map.isWallSpace({
+                y : this.pointToCoord(this.nextSquare(npos.y, this.direction)),
+                x : this.pointToCoord(this.nextSquare(npos.x, this.direction))
+            })) {
+
+            this.due = this.getRandomDirection();
+            return this.move(context);
+        }
+
+        this.position = npos;
+
+        let tmp = this.pane(position);
+        if (tmp) {
+            this.position = tmp;
+        }
+
+        this.due = this.getRandomDirection();
+
+        return {
+            new : this.position,
+            old : oldPos
+        };
+    }
 }
