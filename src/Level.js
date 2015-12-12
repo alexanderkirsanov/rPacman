@@ -133,11 +133,24 @@ const WALLS_OPTION = {
 const GHOST_OPTION = {
     BLINK1: '#fff',
     BLINK2: '#0000BB',
-    EATEN: '#222'
+    EATEN: '#222',
+    COLORS: ['#00FFDE', '#FF0000', '#FFB8DE', '#FFB847']
 };
 const GENERAL_OPTIONS = {
     background: '#0000ff',
     blockColor: '#fff',
     pillColor: '#fff'
 };
-export default {MAP, WALLS, WALLS_OPTION, GHOST_OPTION, GENERAL_OPTIONS};
+const FONTS = {
+    score: {
+        family: 'Arial',
+        size: 12,
+        color: '#FFFFFF'
+    },
+    dialogs: {
+        family: 'Arial',
+        size: '14px',
+        color: '#FFFF00'
+    }
+};
+export default {MAP, WALLS, WALLS_OPTION, GHOST_OPTION, GENERAL_OPTIONS, FONTS};

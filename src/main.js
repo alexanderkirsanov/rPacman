@@ -1,6 +1,5 @@
-import Map from './Map';
 const KEY = {};
-class Game {
+class GameRunner {
     constructor(element) {
         this.element = element;
         document.addEventListener('keydown', (e) => this.keyDown(e));
@@ -14,8 +13,7 @@ class Game {
         this.element.appendChild(canvas);
 
         let ctx = canvas.getContext('2d');
-        this.map = new Map(ctx,blockSize);
-        this.map.draw();
+        const game = new Game(ctx, blockSize);
     }
 
     startNewGame() {
@@ -34,4 +32,4 @@ class Game {
 }
 
 
-new Game(document.getElementById('pacman'));
+new GameRunner(document.getElementById('pacman'));
