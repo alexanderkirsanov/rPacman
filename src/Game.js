@@ -69,6 +69,46 @@ class Game {
         }
     }
 
+    render() {
+        let diff, user, i, len, nScore;
+
+        this.ghostPositions = [];
+        this.ghosts.forEach(ghost=> this.ghostPositions.push(ghost.move(this.context)));
+
+        user = this.user.move(this.context);
+
+        this.ghosts.forEach((ghost, index) => {
+            this.renderBlock(this.ghostPositions[index].old);
+        });
+        this.renderBlock(user.old);
+
+        this.ghosts.forEach(ghost => ghost.draw(this.context));
+        this.user.draw(this.context);
+
+        this.userPosition = user['new'];
+
+        this.ghosts.forEach((ghost, index) =>{
+            if (this.collided(this.userPosition, this.ghostPositions[index]['new'])) {
+                if (ghost.isVunerable()) {
+                    ghost.eat();
+                    this.eatenCount += 1;
+                    nScore = this.eatenCount * 50;
+                    this.logScore(nScore, this.ghostPositions[index]);
+                    this.user.addScore(nScore);
+                    this.setState(Level.GENERAL_OPTIONS.EATEN_PAUSE);
+                    this.timerStart = this.tick;
+                } else if (ghost.isDangerous()) {
+                    this.setState(Level.GENERAL_OPTIONS.DYING);
+                    this.timerStart = this.tick;
+                }
+            }
+        }, this);
+    }
+
+    renderBlock(){
+
+    }
+
     actionHandler() {
         let diff;
         const STATES = Level.GENERAL_OPTIONS;
@@ -76,7 +116,9 @@ class Game {
             this.tick = this.tick + 1;
         }
         this.map.drawPills();
-        if (this.state === STATES.WAITING && this.stateChanged) {
+        if (this.state === STATES.PLAYING) {
+            this.render();
+        } else if (this.state === STATES.WAITING && this.stateChanged) {
             this.stateChanged = false;
             this.map.draw();
             dialog('Press N to start a new game');
@@ -87,14 +129,29 @@ class Game {
             if (this.tick - this.timerStart > (GENERAL.FPS * 2)) {
                 this.looseLife();
             } else {
-                this.renderBlock(this.userPos);
+                this.renderBlock(this.userPosition);
                 this.ghosts.forEach((ghost, index) => {
                     this.renderBlock(this.ghostPositions[index].old);
                     ghost.draw()
                 });
                 this.user.drawDead(this.context, (this.tick - this.timerStart) / (GENERAL.FPS * 2))
             }
+        } else if (this.state === STATES.COUNTDOWN) {
+
+            diff = 5 + Math.floor((this.timerStart - this.tick) / Pacman.FPS);
+
+            if (diff === 0) {
+                this.map.draw();
+                this.setState(STATES.PLAYING);
+            } else {
+                if (diff !== this.lastTime) {
+                    this.lastTime = diff;
+                    this.map.draw();
+                    dialog('Starting in: ' + diff);
+                }
+            }
         }
+        this.renderFooter();
     }
 
 }
