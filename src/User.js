@@ -27,7 +27,9 @@ class User {
     loseLife() {
         this.lives -= 1;
     }
-
+    getLives() {
+        return this.lives;
+    }
     initUser() {
         this.score = 5;
         this.lives = 3;
@@ -226,3 +228,4 @@ class User {
         ctx.fill();
     }
 }
+export default User;

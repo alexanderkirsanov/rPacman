@@ -1,4 +1,5 @@
 import Level from './Level';
+import {GENERAL} from './Constants';
 import Map from './Map';
 import User from './User';
 import Ghost from './Ghost';
@@ -15,6 +16,8 @@ class Game {
         this.ghosts = this.ghostSpecs.map(ghostColor => {
             return new Ghost(this, this.map, ghostColor);
         });
+        this.dialog('Press N to start a new game');
+        this.timer = window.setInterval(this.actionHandler, 1000 / GENERAL.FPS);
     }
 
     getTick() {
@@ -44,4 +47,55 @@ class Game {
         this.setState(Level.GENERAL_OPTIONS.COUNTDOWN);
     }
 
+    startNewGame() {
+        this.setState(Level.GENERAL_OPTIONS.WAITING);
+        this.level = 1;
+        this.user.reset();
+        this.map.reset();
+        this.map.draw();
+        this.startLevel();
+    }
+
+    setState(state) {
+        this.state = state;
+        this.stateChanged = true;
+    }
+
+    looseLife() {
+        this.setState(Level.GENERAL_OPTIONS.WAITING);
+        this.user.looseLife();
+        if (this.user.getLives() > 0) {
+            this.startLevel();
+        }
+    }
+
+    actionHandler() {
+        let diff;
+        const STATES = Level.GENERAL_OPTIONS;
+        if (this.state !== STATES.PAUSE) {
+            this.tick = this.tick + 1;
+        }
+        this.map.drawPills();
+        if (this.state === STATES.WAITING && this.stateChanged) {
+            this.stateChanged = false;
+            this.map.draw();
+            dialog('Press N to start a new game');
+        } else if (this.state === STATES.EATEN_PAUSE && (this.tick - this.timerStart) > (GENERAL.FPS / 3)) {
+            this.map.draw();
+            this.setState(STATES.PLAYING);
+        } else if (this.state = STATES.DYING) {
+            if (this.tick - this.timerStart > (GENERAL.FPS * 2)) {
+                this.looseLife();
+            } else {
+                this.renderBlock(this.userPos);
+                this.ghosts.forEach((ghost, index) => {
+                    this.renderBlock(this.ghostPositions[index].old);
+                    ghost.draw()
+                });
+                this.user.drawDead(this.context, (this.tick - this.timerStart) / (GENERAL.FPS * 2))
+            }
+        }
+    }
+
 }
+export default Game;

@@ -231,8 +231,9 @@ class Ghost {
         this.due = this.getRandomDirection();
 
         return {
-            new : this.position,
+            'new' : this.position,
             old : oldPos
         };
     }
 }
+export default Ghost;
