@@ -105,8 +105,9 @@ class Game {
         }, this);
     }
 
-    renderBlock(){
-
+    renderBlock(position){
+        this.map.drawBlock(Math.floor(position.y/10), Math.floor(position.x/10));
+        this.map.drawBlock(Math.ceil(position.y/10), Math.ceil(position.x/10));
     }
 
     actionHandler() {
@@ -154,5 +155,8 @@ class Game {
         this.renderFooter();
     }
 
+    renderFooter() {
+
+    }
 }
 export default Game;

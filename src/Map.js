@@ -112,7 +112,7 @@ class Map {
     getBlockSize(){
         return this.blockSize;
     }
-    drawBlock(y, x, context) {
+    drawBlock(y, x, context = this.context) {
         let layout = this.map[y][x];
 
         if (layout === PACMAN.PILL) {
