@@ -48,7 +48,7 @@ class User {
     }
 
     reset() {
-        initUser();
+        this.initUser();
     }
 
     keyDown(e) {
@@ -113,7 +113,7 @@ class User {
             block;
 
         if (this.due !== this.direction) {
-            npos = this.getNewCoord(this.due, this.position);
+            npos = this.getNewCoordinates(this.due, this.position);
 
             if (this.isOnSamePlane(this.due, this.direction) ||
                 (this.onGridSquare(this.position) &&
@@ -125,7 +125,7 @@ class User {
         }
 
         if (npos === null) {
-            npos = this.getNewCoord(this.direction, this.position);
+            npos = this.getNewCoordinates(this.direction, this.position);
         }
 
         if (this.onGridSquare(this.position) && this.map.isWallSpace(this.next(npos, this.direction))) {

@@ -17,7 +17,31 @@ class Game {
             return new Ghost(this, this.map, ghostColor);
         });
         this.dialog('Press N to start a new game');
-        this.timer = window.setInterval(()=>this.actionHandler, 1000 / GENERAL.FPS);
+        this.timer = window.setInterval(this.actionHandler.bind(this), 1000 / GENERAL.FPS);
+    }
+
+    onKeyDown(e) {
+        if (e.keyCode === 78) {//N
+            this.startNewGame();
+        } else if (e.keyCode === 80/*P*/ && this.state === GENERAL.PAUSE) {
+            this.map.draw(this.context);
+            this.setState(this.stored);
+        } else if (e.keyCode === 80/*P*/) {
+            this.stored = this.state;
+            this.setState(GENERAL.PAUSE);
+            this.map.draw(ctx);
+            this.dialog('Paused');
+        } else if (this.state !== GENERAL.PAUSE) {
+            return this.user.keyDown(e);
+        }
+        return true;
+    }
+
+    onKeyPress(e) {
+        if (this.state !== GENERAL.WAITING && this.state !== GENERAL.PAUSE) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
     }
 
     getTick() {
@@ -44,11 +68,11 @@ class Game {
         this.user.resetPosition();
         this.ghosts.forEach(ghost=>ghost.reset());
         this.timerStart = this.tick;
-        this.setState(Level.GENERAL_OPTIONS.COUNTDOWN);
+        this.setState(GENERAL.COUNTDOWN);
     }
 
     startNewGame() {
-        this.setState(Level.GENERAL_OPTIONS.WAITING);
+        this.setState(GENERAL.WAITING);
         this.level = 1;
         this.user.reset();
         this.map.reset();
@@ -62,7 +86,7 @@ class Game {
     }
 
     looseLife() {
-        this.setState(Level.GENERAL_OPTIONS.WAITING);
+        this.setState(GENERAL.WAITING);
         this.user.looseLife();
         if (this.user.getLives() > 0) {
             this.startLevel();
@@ -87,7 +111,7 @@ class Game {
 
         this.userPosition = user['new'];
 
-        this.ghosts.forEach((ghost, index) =>{
+        this.ghosts.forEach((ghost, index) => {
             if (this.collided(this.userPosition, this.ghostPositions[index]['new'])) {
                 if (ghost.isVunerable()) {
                     ghost.eat();
@@ -95,24 +119,29 @@ class Game {
                     nScore = this.eatenCount * 50;
                     this.logScore(nScore, this.ghostPositions[index]);
                     this.user.addScore(nScore);
-                    this.setState(Level.GENERAL_OPTIONS.EATEN_PAUSE);
+                    this.setState(GENERAL.EATEN_PAUSE);
                     this.timerStart = this.tick;
                 } else if (ghost.isDangerous()) {
-                    this.setState(Level.GENERAL_OPTIONS.DYING);
+                    this.setState(GENERAL.DYING);
                     this.timerStart = this.tick;
                 }
             }
         }, this);
     }
 
-    renderBlock(position){
-        this.map.drawBlock(Math.floor(position.y/10), Math.floor(position.x/10));
-        this.map.drawBlock(Math.ceil(position.y/10), Math.ceil(position.x/10));
+    collided(user, ghost) {
+        return (Math.sqrt(Math.pow(ghost.x - user.x, 2) +
+                Math.pow(ghost.y - user.y, 2))) < 10;
+    }
+
+    renderBlock(position) {
+        this.map.drawBlock(Math.floor(position.y / 10), Math.floor(position.x / 10));
+        this.map.drawBlock(Math.ceil(position.y / 10), Math.ceil(position.x / 10));
     }
 
     actionHandler() {
         let diff;
-        const STATES = Level.GENERAL_OPTIONS;
+        const STATES = GENERAL;
         if (this.state !== STATES.PAUSE) {
             this.tick = this.tick + 1;
         }
@@ -126,7 +155,7 @@ class Game {
         } else if (this.state === STATES.EATEN_PAUSE && (this.tick - this.timerStart) > (GENERAL.FPS / 3)) {
             this.map.draw();
             this.setState(STATES.PLAYING);
-        } else if (this.state = STATES.DYING) {
+        } else if (this.state === STATES.DYING) {
             if (this.tick - this.timerStart > (GENERAL.FPS * 2)) {
                 this.looseLife();
             } else {
@@ -139,7 +168,7 @@ class Game {
             }
         } else if (this.state === STATES.COUNTDOWN) {
 
-            diff = 5 + Math.floor((this.timerStart - this.tick) / Pacman.FPS);
+            diff = 5 + Math.floor((this.timerStart - this.tick) / GENERAL.FPS);
 
             if (diff === 0) {
                 this.map.draw();
@@ -148,7 +177,7 @@ class Game {
                 if (diff !== this.lastTime) {
                     this.lastTime = diff;
                     this.map.draw();
-                    dialog('Starting in: ' + diff);
+                    this.dialog('Starting in: ' + diff);
                 }
             }
         }
@@ -156,7 +185,7 @@ class Game {
     }
 
     renderFooter() {
-        let topLeft  = (this.map.height * this.map.blockSize),
+        let topLeft = (this.map.height * this.map.blockSize),
             textBase = topLeft + 17;
 
         this.context.fillStyle = '#000000';
@@ -164,20 +193,20 @@ class Game {
 
         this.context.fillStyle = '#FFFF00';
 
-       this.user.getLives().forEach((x, i) => {
-           this.context.fillStyle = '#FFFF00';
-           this.context.beginPath();
-           this.context.moveTo(150 + (25 * i) + this.map.blockSize / 2,
-               (topLeft + 1) + this.map.blockSize / 2);
+        Array.from({length:this.user.getLives()}).forEach((x, i) => {
+            this.context.fillStyle = '#FFFF00';
+            this.context.beginPath();
+            this.context.moveTo(150 + (25 * i) + this.map.blockSize / 2,
+                (topLeft + 1) + this.map.blockSize / 2);
 
-           this.context.arc(150 + (25 * i) + this.map.blockSize / 2,
-               (topLeft + 1) + this.map.blockSize / 2,
-               this.map.blockSize / 2, Math.PI * 0.25, Math.PI * 1.75, false);
-           this.context.fill();
-       }, this);
+            this.context.arc(150 + (25 * i) + this.map.blockSize / 2,
+                (topLeft + 1) + this.map.blockSize / 2,
+                this.map.blockSize / 2, Math.PI * 0.25, Math.PI * 1.75, false);
+            this.context.fill();
+        }, this);
 
         this.context.fillStyle = '#FFFF00';
-        this.context.font      = '14px Arial';
+        this.context.font = '14px Arial';
         this.context.fillText('Score: ' + this.user.getScore(), 30, textBase);
         this.context.fillText('Level: ' + this.level, 260, textBase);
     }

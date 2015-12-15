@@ -223,7 +223,7 @@ class Ghost {
 
         this.position = npos;
 
-        let tmp = this.pane(position);
+        let tmp = this.pane(this.position);
         if (tmp) {
             this.position = tmp;
         }
