@@ -17,7 +17,7 @@ class Game {
             return new Ghost(this, this.map, ghostColor);
         });
         this.dialog('Press N to start a new game');
-        this.timer = window.setInterval(this.actionHandler, 1000 / GENERAL.FPS);
+        this.timer = window.setInterval(()=>this.actionHandler, 1000 / GENERAL.FPS);
     }
 
     getTick() {
@@ -156,7 +156,30 @@ class Game {
     }
 
     renderFooter() {
+        let topLeft  = (this.map.height * this.map.blockSize),
+            textBase = topLeft + 17;
 
+        this.context.fillStyle = '#000000';
+        this.context.fillRect(0, topLeft, (this.map.width * this.map.blockSize), 30);
+
+        this.context.fillStyle = '#FFFF00';
+
+       this.user.getLives().forEach((x, i) => {
+           this.context.fillStyle = '#FFFF00';
+           this.context.beginPath();
+           this.context.moveTo(150 + (25 * i) + this.map.blockSize / 2,
+               (topLeft + 1) + this.map.blockSize / 2);
+
+           this.context.arc(150 + (25 * i) + this.map.blockSize / 2,
+               (topLeft + 1) + this.map.blockSize / 2,
+               this.map.blockSize / 2, Math.PI * 0.25, Math.PI * 1.75, false);
+           this.context.fill();
+       }, this);
+
+        this.context.fillStyle = '#FFFF00';
+        this.context.font      = '14px Arial';
+        this.context.fillText('Score: ' + this.user.getScore(), 30, textBase);
+        this.context.fillText('Level: ' + this.level, 260, textBase);
     }
 }
 export default Game;
