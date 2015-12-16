@@ -29,7 +29,7 @@ class Map {
             return false;
         }
         let piece = this.map[position.y][position.x];
-        return piece === PACMAN.EMPTY || piece === PACMAN.CAKE || piece === PACMAN.CAKE || piece === PACMAN.PILL;
+        return piece === PACMAN.EMPTY || piece === PACMAN.CAKE || piece === PACMAN.PILL;
     }
 
     draw(context = this.context) {
