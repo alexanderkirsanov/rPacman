@@ -153,7 +153,7 @@ class User {
             block === PACMAN.CAKE || block === PACMAN.BONUS || block === PACMAN.PILL) {
 
             this.map.setBlock(nextWhole, PACMAN.EMPTY);
-            this.addScore((block === PACMAN.BISCUIT) ? 10 : 50);
+            this.addScore((block === PACMAN.CAKE) ? 10 : 50);
             this.eaten += 1;
 
             if (this.eaten === 182) {

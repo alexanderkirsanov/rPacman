@@ -22,7 +22,7 @@ const GENERAL = {
     color: {
         PACMAN:"#FFFF00"
     },
-    FPS: 30
+    FPS: 25
 };
 const KEY = {
     'BACKSPACE': 8,

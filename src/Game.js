@@ -151,7 +151,7 @@ class Game {
         } else if (this.state === STATES.WAITING && this.stateChanged) {
             this.stateChanged = false;
             this.map.draw();
-            dialog('Press N to start a new game');
+            this.dialog('Press N to start a new game');
         } else if (this.state === STATES.EATEN_PAUSE && (this.tick - this.timerStart) > (GENERAL.FPS / 3)) {
             this.map.draw();
             this.setState(STATES.PLAYING);
@@ -182,6 +182,20 @@ class Game {
             }
         }
         this.renderFooter();
+    }
+
+    eatenPill() {
+        this.timerStart = tick;
+        this.eatenCount = 0;
+        this.ghosts.forEach(ghost => ghost.makeEatable(this.context));
+    };
+
+    completedLevel() {
+        this.setState(GENERAL.WAITING);
+        this.level += 1;
+        this.map.reset();
+        this.user.newLevel();
+        this.startLevel();
     }
 
     renderFooter() {
