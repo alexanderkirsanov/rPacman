@@ -48,13 +48,6 @@ class Game {
         return this.tick;
     }
 
-    logScore(text, position) {
-        const font = Level.FONTS.score;
-        this.context.fillStyle = font.color;
-        this.context.font = `${font.size}px ${font.family}`;
-        this.context.fillText(text, (position['new']['x'] / 10) * this.map.blockSize, ((position['new']['y'] + 5) / 10) * this.map.blockSize);
-    }
-
     dialog(text) {
         const font = Level.FONTS.dialogs;
         this.context.fillStyle = font.color;
@@ -117,7 +110,6 @@ class Game {
                     ghost.eat();
                     this.eatenCount += 1;
                     nScore = this.eatenCount * 50;
-                    this.logScore(nScore, this.ghostPositions[index]);
                     this.user.addScore(nScore);
                     this.setState(GENERAL.EATEN_PAUSE);
                     this.timerStart = this.tick;

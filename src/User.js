@@ -155,7 +155,6 @@ class User {
             this.map.setBlock(nextWhole, PACMAN.EMPTY);
             this.addScore((block === PACMAN.CAKE) ? 10 : 50);
             this.eaten += 1;
-
             if (this.eaten === 182) {
                 this.game.completedLevel();
             }
