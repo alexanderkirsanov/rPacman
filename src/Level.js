@@ -154,4 +154,5 @@ const FONTS = {
         color: '#FFFF00'
     }
 };
-export default {MAP, WALLS, WALLS_OPTION, GHOST_OPTION, GENERAL_OPTIONS, FONTS};
+var Level = {MAP, WALLS, WALLS_OPTION, GHOST_OPTION, GENERAL_OPTIONS, FONTS};
+export default Level;

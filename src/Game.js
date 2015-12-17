@@ -185,7 +185,7 @@ class Game {
     }
 
     eatenPill() {
-        this.timerStart = tick;
+        this.timerStart = this.tick;
         this.eatenCount = 0;
         this.ghosts.forEach(ghost => ghost.makeEatable(this.context));
     };

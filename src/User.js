@@ -132,8 +132,8 @@ class User {
             this.direction = GENERAL.NONE;
         }
 
-        if (this.direction === this.NONE) {
-            return {'new': this.position, old: GENERAL.position};
+        if (this.direction === GENERAL.NONE) {
+            return {'new': this.position, old: this.position};
         }
 
         if (npos.y === 100 && npos.x >= 190 && this.direction === GENERAL.RIGHT) {
