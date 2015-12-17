@@ -24,7 +24,7 @@ class User {
         return this.score;
     }
 
-    loseLife() {
+    looseLife() {
         this.lives -= 1;
     }
     getLives() {

@@ -162,7 +162,7 @@ class Game {
                 this.renderBlock(this.userPosition);
                 this.ghosts.forEach((ghost, index) => {
                     this.renderBlock(this.ghostPositions[index].old);
-                    ghost.draw()
+                    ghost.draw(this.context);
                 });
                 this.user.drawDead(this.context, (this.tick - this.timerStart) / (GENERAL.FPS * 2))
             }
