@@ -8,7 +8,7 @@ class User {
         this.keyMap[KEY.ARROW_DOWN] = GENERAL.DOWN;
         this.game = game;
         this.map = map;
-        this.score = 5;
+        this.score = 0;
         this.lives = null;
         this.initUser();
     }
@@ -31,7 +31,7 @@ class User {
         return this.lives;
     }
     initUser() {
-        this.score = 5;
+        this.score = 0;
         this.lives = 3;
         this.newLevel();
     }

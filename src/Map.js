@@ -45,6 +45,16 @@ class Map {
         }
     }
 
+    getFreeCell() {
+        const line = this.map[Math.floor(Math.random() * (this.map.length - 1)) + 1];
+        let cell = null;
+        while (cell === null) {
+            const tmpCell = line[Math.floor(Math.random() * (line.length - 1)) + 1];
+            //if (tmpCell)
+        }
+        return cell;
+    }
+
     drawWall(context) {
         context.strokeStyle = this.level.WALLS_OPTION.strokeStyle;
         context.lineWidth = this.level.WALLS_OPTION.lineWidth;
@@ -110,9 +120,11 @@ class Map {
             }
         }
     }
-    getBlockSize(){
+
+    getBlockSize() {
         return this.blockSize;
     }
+
     drawBlock(y, x, context = this.context) {
         let layout = this.map[y][x];
 
@@ -121,7 +133,7 @@ class Map {
         }
         context.beginPath();
         if (layout === PACMAN.EMPTY || layout === PACMAN.BOX ||
-            layout === PACMAN.CAKE || layout === PACMAN.BONUS) {
+            layout === PACMAN.CAKE) {
 
             context.fillStyle = Level.GENERAL_OPTIONS.background;
             context.fillRect((x * this.blockSize), (y * this.blockSize),

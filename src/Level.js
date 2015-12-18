@@ -140,7 +140,8 @@ const GHOST_OPTION = {
 const GENERAL_OPTIONS = {
     background: '#0000ff',
     blockColor: '#fff',
-    pillColor: '#fff'
+    pillColor: '#fff',
+    bonusColors: ['#3366FF','#6633FF','#3366FF','#CC33FF','#FF33CC']
 };
 const FONTS = {
     score: {
@@ -154,5 +155,5 @@ const FONTS = {
         color: '#FFFF00'
     }
 };
-var Level = {MAP, WALLS, WALLS_OPTION, GHOST_OPTION, GENERAL_OPTIONS, FONTS};
+const Level = {MAP, WALLS, WALLS_OPTION, GHOST_OPTION, GENERAL_OPTIONS, FONTS};
 export default Level;

@@ -12,6 +12,7 @@ class Game {
         this.map.draw();
         this.user = new User(this, this.map);
         this.ghosts = [];
+        this.level = 1;
         this.ghostSpecs = Level.GHOST_OPTION.COLORS;
         this.ghosts = this.ghostSpecs.map(ghostColor => {
             return new Ghost(this, this.map, ghostColor);
@@ -194,7 +195,7 @@ class Game {
         let topLeft = (this.map.height * this.map.blockSize),
             textBase = topLeft + 17;
 
-        this.context.fillStyle = '#000000';
+        this.context.fillStyle = Level.GENERAL_OPTIONS.background;
         this.context.fillRect(0, topLeft, (this.map.width * this.map.blockSize), 30);
 
         this.context.fillStyle = '#FFFF00';
