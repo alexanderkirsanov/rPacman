@@ -5,6 +5,7 @@ class Bonus {
         this.map = map;
         this.bonusString = bonusString;
         this.index = 0;
+        this.resetBonuses();
     }
 
     resetBonuses() {
@@ -36,18 +37,16 @@ class Bonus {
     draw(context){
         if (this.position){
             context.beginPath();
-
+            const {x,y} = this.position;
             context.fillStyle = Level.GENERAL_OPTIONS.background;
-            context.fillRect((j * this.blockSize), (i * this.blockSize),
+            context.fillRect((y * this.blockSize), (x * this.blockSize),
                 this.blockSize, this.blockSize);
 
             context.fillStyle = Level.GENERAL_OPTIONS.pillColor;
             const font = Level.FONTS.bonus;
             const text = this.currentBonus;
             context.font = `${font.size}px ${font.family}`;
-            let width = context.measureText(text).width,
-                x = ((this.map.width * this.map.blockSize) - width) / 2;
-            context.fillText(text, x, (this.map.height * 10) + 8);
+            context.fillText(text, y * this.blockSize, x* this.blockSize);
         }
     }
 }

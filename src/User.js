@@ -18,6 +18,7 @@ class User {
         if (this.score >= 10000 && this.score - score < 10000) {
             this.lives += 1;
         }
+        this.game.checkScore(this.score);
     }
 
     getScore() {

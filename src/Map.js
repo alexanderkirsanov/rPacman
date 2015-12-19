@@ -12,7 +12,7 @@ class Map {
 
     reset() {
         this.map = [];
-        this.level.MAP.forEach(line => this.map.push(Object.assign({}, line)));
+        this.level.MAP.forEach(line => this.map.push(Object.assign([], line)));
         this.height = this.level.MAP.length;
         this.width = this.level.MAP[0].length;
     }

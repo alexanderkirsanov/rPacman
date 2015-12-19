@@ -6,7 +6,7 @@ import Ghost from './Ghost';
 import Bonus from './Bonus';
 
 class Game {
-    constructor(context, blockSize) {
+    constructor(context, blockSize, bonusWord = 'reltio') {
         this.tick = 0;
         this.context = context;
         this.map = new Map(context, blockSize);
@@ -18,6 +18,7 @@ class Game {
         this.ghosts = this.ghostSpecs.map(ghostColor => {
             return new Ghost(this, this.map, ghostColor);
         });
+        this.bonus = new Bonus(this, this.map, bonusWord);
         this.dialog('Press N to start a new game');
         this.timer = window.setInterval(this.actionHandler.bind(this), 1000 / GENERAL.FPS);
     }
@@ -121,6 +122,7 @@ class Game {
                 }
             }
         }, this);
+        this.bonus.draw(this.context);
 
     }
 
@@ -184,7 +186,9 @@ class Game {
         this.eatenCount = 0;
         this.ghosts.forEach(ghost => ghost.makeEatable(this.context));
     };
-
+    checkScore(score){
+        this.bonus.handleBonus(score);
+    }
     completedLevel() {
         this.setState(GENERAL.WAITING);
         this.level += 1;
