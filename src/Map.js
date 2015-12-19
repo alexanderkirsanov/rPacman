@@ -50,7 +50,9 @@ class Map {
         let cell = null;
         while (cell === null) {
             const tmpCell = line[Math.floor(Math.random() * (line.length - 1)) + 1];
-            //if (tmpCell)
+            if (tmpCell !== PACMAN.BOX && tmpCell !== PACMAN.WALL) {
+                return tmpCell;
+            }
         }
         return cell;
     }
