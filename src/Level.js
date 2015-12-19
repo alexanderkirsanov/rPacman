@@ -153,6 +153,11 @@ const FONTS = {
         family: 'Arial',
         size: '14px',
         color: '#FFFF00'
+    },
+    bonus: {
+        family: 'Arial',
+        size: '18px',
+        color: '#FFFF00'
     }
 };
 const Level = {MAP, WALLS, WALLS_OPTION, GHOST_OPTION, GENERAL_OPTIONS, FONTS};

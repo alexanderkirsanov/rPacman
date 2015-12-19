@@ -46,12 +46,14 @@ class Map {
     }
 
     getFreeCell() {
-        const line = this.map[Math.floor(Math.random() * (this.map.length - 1)) + 1];
+        const y = Math.floor(Math.random() * (this.map.length - 1)) + 1;
+        const line = this.map[y];
         let cell = null;
         while (cell === null) {
-            const tmpCell = line[Math.floor(Math.random() * (line.length - 1)) + 1];
+            const x = Math.floor(Math.random() * (line.length - 1)) + 1;
+            const tmpCell = line[x];
             if (tmpCell !== PACMAN.BOX && tmpCell !== PACMAN.WALL) {
-                return tmpCell;
+                return {x: x, y: y};
             }
         }
         return cell;

@@ -3,6 +3,7 @@ import {GENERAL} from './Constants';
 import Map from './Map';
 import User from './User';
 import Ghost from './Ghost';
+import Bonus from './Bonus';
 
 class Game {
     constructor(context, blockSize) {
@@ -120,6 +121,7 @@ class Game {
                 }
             }
         }, this);
+
     }
 
     collided(user, ghost) {
