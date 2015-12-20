@@ -20,7 +20,7 @@ const GENERAL = {
     EATEN_PAUSE: 9,
     DYING: 10,
     color: {
-        PACMAN:"#FFFF00"
+        PACMAN: "#FFFF00"
     },
     FPS: 25
 };

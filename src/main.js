@@ -3,7 +3,7 @@ import Game from './Game';
 class GameRunner {
     constructor(element) {
         this.element = element;
-        
+
         let blockSize = this.element.offsetWidth / 19,
             canvas = document.createElement('canvas');
 

@@ -28,9 +28,11 @@ class User {
     looseLife() {
         this.lives -= 1;
     }
+
     getLives() {
         return this.lives;
     }
+
     initUser() {
         this.score = 0;
         this.lives = 3;

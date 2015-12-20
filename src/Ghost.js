@@ -186,12 +186,14 @@ class Ghost {
             return this.position;
         }
         return false;
-    };
+    }
+
+;
     move(context) {
 
         let oldPos = this.position,
             onGrid = this.onGridSquare(this.position),
-            npos   = null;
+            npos = null;
 
         if (this.due !== this.direction) {
 
@@ -199,8 +201,9 @@ class Ghost {
 
             if (onGrid &&
                 this.map.isFloorSpace({
-                    y:this.pointToCoord(this.nextSquare(npos.y, this.due)),
-                    x:this.pointToCoord(this.nextSquare(npos.x, this.due))})) {
+                    y: this.pointToCoord(this.nextSquare(npos.y, this.due)),
+                    x: this.pointToCoord(this.nextSquare(npos.x, this.due))
+                })) {
                 this.direction = this.due;
             } else {
                 npos = null;
@@ -213,8 +216,8 @@ class Ghost {
 
         if (onGrid &&
             this.map.isWallSpace({
-                y : this.pointToCoord(this.nextSquare(npos.y, this.direction)),
-                x : this.pointToCoord(this.nextSquare(npos.x, this.direction))
+                y: this.pointToCoord(this.nextSquare(npos.y, this.direction)),
+                x: this.pointToCoord(this.nextSquare(npos.x, this.direction))
             })) {
 
             this.due = this.getRandomDirection();
@@ -231,8 +234,8 @@ class Ghost {
         this.due = this.getRandomDirection();
 
         return {
-            'new' : this.position,
-            old : oldPos
+            'new': this.position,
+            old: oldPos
         };
     }
 }

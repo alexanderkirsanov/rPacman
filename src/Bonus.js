@@ -22,7 +22,7 @@ class Bonus {
         if (score - this.oldScore > 100 && !this.currentBonus && this.index < this.bonusArray.length) {
             this.oldScore = score;
             this.position = this.calculateBonusPosition(this.map);
-            if (this.position){
+            if (this.position) {
                 this.currentBonus = this.bonusArray[this.index];
                 this.index += 1;
             }
@@ -42,7 +42,7 @@ class Bonus {
         }
     }
 
-    getCurrent(){
+    getCurrent() {
         return this.currentBonus;
     }
 
@@ -59,7 +59,7 @@ class Bonus {
             const font = Level.FONTS.bonus,
                 text = this.currentBonus.caption.toUpperCase();
             context.font = `${font.size}px ${font.family}`;
-            context.fillText(text, (x + 0.5) * this.map.blockSize - 5, (y + 0.5) * this.map.blockSize);
+            context.fillText(text, (x + 0.5) * this.map.blockSize - 5, (y + 0.5) * this.map.blockSize + 1);
         }
     }
 }

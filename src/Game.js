@@ -124,8 +124,8 @@ class Game {
         }, this);
         this.bonus.draw(this.context);
         const bonusPosition = this.bonus.getPosition();
-        if (bonusPosition){
-            if (this.collided(this.userPosition, bonusPosition)){
+        if (bonusPosition) {
+            if (this.collided(this.userPosition, bonusPosition)) {
                 const bonus = this.bonus.getCurrent();
                 this.bonus.eatBonus();
             }
@@ -191,10 +191,13 @@ class Game {
         this.timerStart = this.tick;
         this.eatenCount = 0;
         this.ghosts.forEach(ghost => ghost.makeEatable(this.context));
-    };
-    checkScore(score){
+    }
+
+;
+    checkScore(score) {
         this.bonus.handleBonus(score);
     }
+
     completedLevel() {
         this.setState(GENERAL.WAITING);
         this.level += 1;
@@ -212,7 +215,7 @@ class Game {
 
         this.context.fillStyle = '#FFFF00';
 
-        Array.from({length:this.user.getLives()}).forEach((x, i) => {
+        Array.from({length: this.user.getLives()}).forEach((x, i) => {
             this.context.fillStyle = '#FFFF00';
             this.context.beginPath();
             this.context.moveTo(150 + (25 * i) + this.map.blockSize / 2,
