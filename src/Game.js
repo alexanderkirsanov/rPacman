@@ -32,7 +32,7 @@ class Game {
         } else if (e.keyCode === 80/*P*/) {
             this.stored = this.state;
             this.setState(GENERAL.PAUSE);
-            this.map.draw(ctx);
+            this.map.draw(this.context);
             this.dialog('Paused');
         } else if (this.state !== GENERAL.PAUSE) {
             return this.user.keyDown(e);
@@ -123,7 +123,13 @@ class Game {
             }
         }, this);
         this.bonus.draw(this.context);
-
+        const bonusPosition = this.bonus.getPosition();
+        if (bonusPosition){
+            if (this.collided(this.userPosition, bonusPosition)){
+                const bonus = this.bonus.getCurrent();
+                this.bonus.eatBonus();
+            }
+        }
     }
 
     collided(user, ghost) {

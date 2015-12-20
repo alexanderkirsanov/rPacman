@@ -141,7 +141,7 @@ const GENERAL_OPTIONS = {
     background: '#0000ff',
     blockColor: '#fff',
     pillColor: '#fff',
-    bonusColors: ['#3366FF','#6633FF','#3366FF','#CC33FF','#FF33CC']
+    bonusColors: ['#CC6699','#CC6666','#B83D7A','#8A2E5C','#2E8A5C']
 };
 const FONTS = {
     score: {
@@ -156,7 +156,7 @@ const FONTS = {
     },
     bonus: {
         family: 'Arial',
-        size: '18px',
+        size: 20,
         color: '#FFFF00'
     }
 };

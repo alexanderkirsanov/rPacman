@@ -21,32 +21,45 @@ class Bonus {
     handleBonus(score) {
         if (score - this.oldScore > 100 && !this.currentBonus && this.index < this.bonusArray.length) {
             this.oldScore = score;
-            this.currentBonus = this.bonusArray[this.index];
             this.position = this.calculateBonusPosition(this.map);
-            this.index += 1;
+            if (this.position){
+                this.currentBonus = this.bonusArray[this.index];
+                this.index += 1;
+            }
         }
     }
 
-    calculateBonusPosition(map){
+    calculateBonusPosition(map) {
         return map.getFreeCell();
     }
-    eatBonus(){
+
+    getPosition() {
+        if (this.position) {
+            return {x: this.position.x * 10, y: this.position.y * 10}
+        }
+        else {
+            return null;
+        }
+    }
+
+    getCurrent(){
+        return this.currentBonus;
+    }
+
+    eatBonus() {
         this.currentBonus = null;
         this.position = null;
     }
-    draw(context){
-        if (this.position){
-            context.beginPath();
-            const {x,y} = this.position;
-            context.fillStyle = Level.GENERAL_OPTIONS.background;
-            context.fillRect((y * this.blockSize), (x * this.blockSize),
-                this.blockSize, this.blockSize);
 
-            context.fillStyle = Level.GENERAL_OPTIONS.pillColor;
-            const font = Level.FONTS.bonus;
-            const text = this.currentBonus;
+    draw(context) {
+        if (this.position) {
+            const {x,y} = this.position;
+
+            context.fillStyle = this.currentBonus.fill;
+            const font = Level.FONTS.bonus,
+                text = this.currentBonus.caption.toUpperCase();
             context.font = `${font.size}px ${font.family}`;
-            context.fillText(text, y * this.blockSize, x* this.blockSize);
+            context.fillText(text, (x + 0.5) * this.map.blockSize - 5, (y + 0.5) * this.map.blockSize);
         }
     }
 }
