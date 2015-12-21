@@ -228,11 +228,13 @@ class Game {
         this.context.fillStyle = '#FFFF00';
         this.context.font = '14px Arial';
         this.context.fillText('Score: ' + this.user.getScore(), 30, textBase);
-        this.context.fillText('Level: ' + this.level, 260, textBase);
+        this.context.fillText('Level: ' + this.level, this.map.width * this.map.blockSize - 100, textBase);
         textBase = textBase + 30;
-        let xBase = 20;
+        let xBase = 30;
         const bonus = this.bonus.getState();
         const bonusIndex = bonus.index;
+        this.context.fillText('Bonus word:', xBase, textBase);
+        xBase += this.context.measureText('Bonus word:').width;
         (bonus.array||[]).forEach((item, index)=> {
             if (index <= bonusIndex){
                 this.context.fillStyle = item.fill;

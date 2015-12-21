@@ -30,7 +30,7 @@ class Bonus {
     }
 
     getState() {
-        return {index: this.index - 1, array: this.bonusArray};
+        return {index: this.bonusIndex, array: this.bonusArray};
     }
 
     calculateBonusPosition(map) {
@@ -54,6 +54,7 @@ class Bonus {
         if (this.index === this.bonusArray.length) {
             this.game.dialog('Merry Christmas!');
         }
+        this.bonusIndex = this.index;
         this.currentBonus = null;
         this.position = null;
     }
