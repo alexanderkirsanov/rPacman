@@ -54,7 +54,7 @@ class Bonus {
         if (this.index === this.bonusArray.length) {
             this.game.dialog('Merry Christmas!');
         }
-        this.bonusIndex = this.index;
+        this.bonusIndex = this.index - 1;
         this.currentBonus = null;
         this.position = null;
     }
