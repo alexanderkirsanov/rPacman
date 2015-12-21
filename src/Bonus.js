@@ -29,6 +29,10 @@ class Bonus {
         }
     }
 
+    getState() {
+        return {index: this.index - 1, array: this.bonusArray};
+    }
+
     calculateBonusPosition(map) {
         return map.getFreeCell();
     }
@@ -47,6 +51,9 @@ class Bonus {
     }
 
     eatBonus() {
+        if (this.index === this.bonusArray.length) {
+            this.game.dialog('Merry Christmas!');
+        }
         this.currentBonus = null;
         this.position = null;
     }

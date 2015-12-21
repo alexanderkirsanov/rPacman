@@ -8,7 +8,7 @@ class GameRunner {
             canvas = document.createElement('canvas');
 
         canvas.setAttribute('width', (blockSize * 19) + 'px');
-        canvas.setAttribute('height', (blockSize * 22) + 30 + 'px');
+        canvas.setAttribute('height', (blockSize * 22) + 65 + 'px');
         this.element.appendChild(canvas);
         let ctx = canvas.getContext('2d');
         const game = new Game(ctx, blockSize);

@@ -193,7 +193,6 @@ class Game {
         this.ghosts.forEach(ghost => ghost.makeEatable(this.context));
     }
 
-;
     checkScore(score) {
         this.bonus.handleBonus(score);
     }
@@ -211,7 +210,7 @@ class Game {
             textBase = topLeft + 17;
 
         this.context.fillStyle = Level.GENERAL_OPTIONS.background;
-        this.context.fillRect(0, topLeft, (this.map.width * this.map.blockSize), 30);
+        this.context.fillRect(0, topLeft, (this.map.width * this.map.blockSize), 80);
 
         this.context.fillStyle = '#FFFF00';
 
@@ -226,11 +225,24 @@ class Game {
                 this.map.blockSize / 2, Math.PI * 0.25, Math.PI * 1.75, false);
             this.context.fill();
         }, this);
-
         this.context.fillStyle = '#FFFF00';
         this.context.font = '14px Arial';
         this.context.fillText('Score: ' + this.user.getScore(), 30, textBase);
         this.context.fillText('Level: ' + this.level, 260, textBase);
+        textBase = textBase + 30;
+        let xBase = 20;
+        const bonus = this.bonus.getState();
+        const bonusIndex = bonus.index;
+        (bonus.array||[]).forEach((item, index)=> {
+            if (index <= bonusIndex){
+                this.context.fillStyle = item.fill;
+            } else{
+                this.context.fillStyle = '#FFFF00';
+            }
+            this.context.font = '14px Lucida Console';
+            xBase += 15;
+            this.context.fillText(item.caption.toUpperCase(), xBase, textBase);
+        }, this);
     }
 }
 export default Game;
