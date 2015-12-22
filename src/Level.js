@@ -151,7 +151,7 @@ const FONTS = {
     },
     dialogs: {
         family: 'Arial',
-        size: '14px',
+        size: 14,
         color: '#FFFF00'
     },
     bonus: {

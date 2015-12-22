@@ -30,14 +30,18 @@ class Game {
             this.map.draw(this.context);
             this.setState(this.stored);
         } else if (e.keyCode === 80/*P*/) {
-            this.stored = this.state;
-            this.setState(GENERAL.PAUSE);
-            this.map.draw(this.context);
-            this.dialog('Paused');
+            this.pause();
         } else if (this.state !== GENERAL.PAUSE) {
             return this.user.keyDown(e);
         }
         return true;
+    }
+
+    pause(text = 'Paused', font) {
+        this.stored = this.state;
+        this.setState(GENERAL.PAUSE);
+        this.map.draw(this.context);
+        this.dialog(text, font);
     }
 
     onKeyPress(e) {
@@ -51,13 +55,19 @@ class Game {
         return this.tick;
     }
 
-    dialog(text) {
-        const font = Level.FONTS.dialogs;
+    dialog(text, font = Level.FONTS.dialogs) {
         this.context.fillStyle = font.color;
         this.context.font = `${font.size}px ${font.family}`;
-        let width = this.context.measureText(text).width,
-            x = ((this.map.width * this.map.blockSize) - width) / 2;
-        this.context.fillText(text, x, (this.map.height * 10) + 8);
+        if (typeof text !== 'Array') {
+            text = [text];
+        }
+        text.forEach((line, index) => {
+            const measure = this.context.measureText(line);
+            const width = measure.width,
+                x = ((this.map.width * this.map.blockSize) - width) / 2;
+            this.context.fillText(line, x, (this.map.height * 10) + index * (font.size + 3));
+        });
+
     }
 
     startLevel() {
@@ -235,10 +245,10 @@ class Game {
         const bonusIndex = bonus.index;
         this.context.fillText('Bonus word:', xBase, textBase);
         xBase += this.context.measureText('Bonus word:').width;
-        (bonus.array||[]).forEach((item, index)=> {
-            if (index <= bonusIndex){
+        (bonus.array || []).forEach((item, index)=> {
+            if (index <= bonusIndex) {
                 this.context.fillStyle = item.fill;
-            } else{
+            } else {
                 this.context.fillStyle = '#FFFF00';
             }
             this.context.font = '14px Lucida Console';
