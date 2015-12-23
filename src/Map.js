@@ -54,7 +54,6 @@ class Map {
             const x = Math.floor(Math.random() * (line.length - 1)) + 1;
             const tmpCell = line[x];
             if (tmpCell !== PACMAN.BOX && tmpCell !== PACMAN.WALL) {
-                console.log({tmpCell, x, y});
                 return {x: x, y: y};
             }
             count++;

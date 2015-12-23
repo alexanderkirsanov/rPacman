@@ -224,17 +224,27 @@ class Game {
 
         this.context.fillStyle = '#FFFF00';
 
-        Array.from({length: this.user.getLives()}).forEach((x, i) => {
-            this.context.fillStyle = '#FFFF00';
+        Array.from({length: this.user.getLives()}).forEach((n, i) => {
+            let size = this.map.blockSize,
+                angle = {start: 0.25, end: 1.75, direction: false};
+            const innerRadius = 0;
+            const outerRadius = size / 2;
+            const x = 150 + (25 * i) + this.map.blockSize / 2;
+            const y = (topLeft + 1) + this.map.blockSize / 2;
+            const gradient = this.context.createRadialGradient(x - this.map.blockSize * 0.02, y - this.map.blockSize * 0.02, innerRadius, x, y, outerRadius);
+            gradient.addColorStop(0, GENERAL.color.PACMAN.start);
+            gradient.addColorStop(1, GENERAL.color.PACMAN.end);
+            this.context.fillStyle = gradient;
             this.context.beginPath();
-            this.context.moveTo(150 + (25 * i) + this.map.blockSize / 2,
-                (topLeft + 1) + this.map.blockSize / 2);
-
-            this.context.arc(150 + (25 * i) + this.map.blockSize / 2,
-                (topLeft + 1) + this.map.blockSize / 2,
-                this.map.blockSize / 2, Math.PI * 0.25, Math.PI * 1.75, false);
+            this.context.moveTo(x, y);
+            this.context.arc(x, y, size / 2, Math.PI * angle.start, Math.PI * angle.end, angle.direction);
+            this.context.fill();
+            this.context.beginPath();
+            this.context.fillStyle = GENERAL.color.PACMAN.eye;
+            this.context.arc(x - size * 0.01, y - size / 4, size / 12, 0, 2 * Math.PI, false);
             this.context.fill();
         }, this);
+
         this.context.fillStyle = '#FFFF00';
         this.context.font = '14px Arial';
         this.context.fillText('Score: ' + this.user.getScore(), 30, textBase);

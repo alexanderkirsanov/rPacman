@@ -179,6 +179,11 @@ class User {
     }
 
     calcAngle(dir, pos) {
+        if (dir !== GENERAL.NONE) {
+            this.oldDirection = dir;
+        } else {
+            dir = this.oldDirection;
+        }
         if (dir === GENERAL.RIGHT && (pos.x % 10 < 5)) {
             return {start: 0.25, end: 1.75, direction: false};
         } else if (dir === GENERAL.DOWN && (pos.y % 10 < 5)) {
@@ -213,9 +218,7 @@ class User {
     calculateEye(center, direction, pos) {
         const {x,y,size} = center;
         let result;
-        console.log(center);
-        console.log(direction);
-        if (direction !== GENERAL.NONE){
+        if (direction !== GENERAL.NONE) {
             this.oldDirection = direction;
         } else {
             direction = this.oldDirection;
@@ -252,8 +255,7 @@ class User {
         ctx.fill();
         ctx.beginPath();
         ctx.fillStyle = GENERAL.color.PACMAN.eye;
-        console.log(eyePos);
-        ctx.arc(eyePos.x, eyePos.y, size / 10, 0, 2 * Math.PI, false);
+        ctx.arc(eyePos.x, eyePos.y, size / 12, 0, 2 * Math.PI, false);
         ctx.fill();
     }
 }

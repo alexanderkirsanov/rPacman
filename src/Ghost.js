@@ -188,7 +188,8 @@ class Ghost {
         return false;
     }
 
-;
+    ;
+
     move(context) {
 
         let oldPos = this.position,
