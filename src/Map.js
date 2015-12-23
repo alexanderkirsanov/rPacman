@@ -115,12 +115,13 @@ class Map {
                         this.blockSize, this.blockSize);
                     const x = (j * this.blockSize) + this.blockSize / 2;
                     const y = (i * this.blockSize) + this.blockSize / 2;
-                    const r = Math.abs(5 - (this.pillSize / 3));
+                    const r = Math.abs(7 - (this.pillSize / 3));
                     const gradient = context.createRadialGradient(x, y, 0, x, y, r);
                     gradient.addColorStop(0, Level.GENERAL_OPTIONS.pillColor.start);
-                    gradient.addColorStop(1, Level.GENERAL_OPTIONS.pillColor.end);
-                    context.fillStyle = gradient;
+                    gradient.addColorStop(0.7, Level.GENERAL_OPTIONS.pillColor.end);
+                    gradient.addColorStop(1, Level.GENERAL_OPTIONS.pillColor.shadow);
                     context.arc(x, y, r, 0, Math.PI * 2, false);
+                    context.fillStyle = gradient;
                     context.fill();
                     context.closePath();
                 }
@@ -148,9 +149,15 @@ class Map {
 
             if (layout === PACMAN.CAKE) {
                 context.fillStyle = Level.GENERAL_OPTIONS.blockColor;
-                context.fillRect((x * this.blockSize) + (this.blockSize / 2.5),
-                    (y * this.blockSize) + (this.blockSize / 2.5),
-                    this.blockSize / 6, this.blockSize / 6);
+
+                this.context.beginPath();
+                this.context.arc((x * this.blockSize) + (this.blockSize / 2),
+                    (y * this.blockSize) + (this.blockSize / 2),
+                    this.blockSize / 12,
+                    0, 2 * Math.PI, false);
+                this.context.fill();
+                this.context.closePath();
+
             }
         }
     }
