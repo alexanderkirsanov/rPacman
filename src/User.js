@@ -179,7 +179,7 @@ class User {
     }
 
     calcAngle(dir, pos) {
-        if (dir == GENERAL.RIGHT && (pos.x % 10 < 5)) {
+        if (dir === GENERAL.RIGHT && (pos.x % 10 < 5)) {
             return {start: 0.25, end: 1.75, direction: false};
         } else if (dir === GENERAL.DOWN && (pos.y % 10 < 5)) {
             return {start: 0.75, end: 2.25, direction: false};
@@ -196,40 +196,64 @@ class User {
         if (amount >= 1) {
             return;
         }
-
-        ctx.fillStyle = '#FFFF00';
-        const x = ((this.position.x / 10) * s) + s / 2;
-        const y = ((this.position.y / 10) * s) + s / 2;
-
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-
-        ctx.arc(x,
-            y,
-            s / 2, 0, Math.PI * 2 * amount, true);
-
-        ctx.fill();
-    }
-
-    draw(ctx) {
-        let s = this.map.blockSize,
-            angle = this.calcAngle(this.direction, this.position);
         const x = ((this.position.x / 10) * s) + s / 2;
         const y = ((this.position.y / 10) * s) + s / 2;
         const innerRadius = 0;
-        const outerRadius = s/2;
-        const gradient = ctx.createRadialGradient(x,y,innerRadius,x,y,outerRadius);
+        const outerRadius = s / 2;
+        const gradient = ctx.createRadialGradient(x, y, innerRadius, x, y, outerRadius);
         gradient.addColorStop(0, GENERAL.color.PACMAN.start);
         gradient.addColorStop(1, GENERAL.color.PACMAN.end);
         ctx.fillStyle = gradient;
-
         ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.arc(x, y, s / 2, 0, Math.PI * 2 * amount, true);
+        ctx.fill();
+    }
 
-        ctx.moveTo(x,y);
+    calculateEye(center, direction, pos) {
+        const {x,y,size} = center;
+        let result;
+        console.log(center);
+        console.log(direction);
+        if (direction !== GENERAL.NONE){
+            this.oldDirection = direction;
+        } else {
+            direction = this.oldDirection;
+        }
+        if (direction === GENERAL.RIGHT) {
+            result = {x: x + size * 0.01, y: y - size / 4}
+        } else if (direction === GENERAL.LEFT) {
+            result = {x: x - size * 0.01, y: y - size / 4}
+        } else if (direction === GENERAL.UP) {
+            result = {x: x - size / 4, y: y - size * 0.01}
+        } else if (direction === GENERAL.DOWN) {
+            result = {x: x + size / 4, y: y - size * 0.01}
+        } else {
+            result = {x: x, y: y}
+        }
+        return result;
+    }
 
-        ctx.arc(x,y, s / 2, Math.PI * angle.start,
-            Math.PI * angle.end, angle.direction);
-
+    draw(ctx) {
+        let size = this.map.blockSize,
+            angle = this.calcAngle(this.direction, this.position);
+        const x = ((this.position.x / 10) * size) + size / 2;
+        const y = ((this.position.y / 10) * size) + size / 2;
+        const eyePos = this.calculateEye({x, y, size}, this.direction, this.position);
+        const innerRadius = 0;
+        const outerRadius = size / 2;
+        const gradient = ctx.createRadialGradient(x, y, innerRadius, x, y, outerRadius);
+        gradient.addColorStop(0, GENERAL.color.PACMAN.start);
+        gradient.addColorStop(1, GENERAL.color.PACMAN.end);
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.arc(x, y, size / 2, Math.PI * angle.start, Math.PI * angle.end, angle.direction);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = GENERAL.color.PACMAN.eye;
+        console.log(eyePos);
+        ctx.arc(eyePos.x, eyePos.y, size / 10, 0, 2 * Math.PI, false);
         ctx.fill();
     }
 }
