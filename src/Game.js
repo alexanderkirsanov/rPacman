@@ -81,6 +81,7 @@ class Game {
         this.setState(GENERAL.WAITING);
         this.level = 1;
         this.user.reset();
+        this.bonus.resetBonuses();
         this.map.reset();
         this.map.draw();
         this.startLevel();
@@ -223,18 +224,15 @@ class Game {
         this.context.fillRect(0, topLeft, (this.map.width * this.map.blockSize), 80);
 
         this.context.fillStyle = '#FFFF00';
-        this.context.font = '12px RubrikRegular';
+        this.context.font = '14px RubrikRegular';
         this.context.textAlign='start';
         this.context.fillText('Score', 40, textBase);
         textBase = textBase + 29;
         this.context.fillStyle = '#FFFFFF';
-        this.context.font = '26px RubrikRegular';
-        this.context.textAlign='end';
-        this.context.fillText(this.user.getScore(), 90, textBase);
-        this.context.textAlign="start";
-
-
-
+        this.context.font = '28px RubrikBold';
+        this.context.textAlign='center';
+        this.context.fillText(this.user.getScore(), 55, textBase);
+        this.context.textAlign='start';
         Array.from({length: this.user.getLives()}).forEach((n, i) => {
             let size = this.map.blockSize,
                 angle = {start: 0.25, end: 1.75, direction: false};
@@ -252,28 +250,45 @@ class Game {
             this.context.fill();
             this.context.beginPath();
             this.context.fillStyle = GENERAL.color.PACMAN.eye;
-            this.context.arc(x - size * 0.01, y - size / 4, size / 12, 0, 2 * Math.PI, false);
+            this.context.arc(x - size * 0.01, y - size / 4, size / 20, 0, 2 * Math.PI, false);
             this.context.fill();
         }, this);
 
+        const bonus = this.bonus.getState();
+        const bonusIndex = bonus.index;
+        textBase = topLeft + 12;
+        this.context.fillStyle = '#FFFF00';
+        this.context.font = '14px RubrikRegular';
+        this.context.textAlign='start';
+        this.context.fillText('Bonus word', 309, textBase);
+        textBase = textBase + 29;
+        let xBase = 275;
+        (bonus.array || []).forEach((item, index)=> {
+            if (index <= bonusIndex) {
+                this.context.fillStyle = item.fill;
+            } else {
+                this.context.fillStyle = '#1d1c43';
+            }
+            this.context.font = '30px RubrikMedium';
+            const text = item.caption.toUpperCase();
+            xBase += item.width || this.context.measureText(text).width;
+            this.context.fillText(text, xBase, textBase);
+        }, this);
+        textBase = topLeft + 12;
+        this.context.fillStyle = '#FFFF00';
+        this.context.font = '14px RubrikRegular';
+        this.context.textAlign='start';
+        this.context.fillText('Level', 450, textBase);
+        textBase = textBase + 29;
+        this.context.fillStyle = '#FFFFFF';
+        this.context.font = '28px RubrikBold';
+        this.context.textAlign='center';
+        this.context.fillText(String(this.level), 470, textBase);
+        this.context.textAlign='start';
 
         //this.context.fillText('Level: ' + this.level, this.map.width * this.map.blockSize - 100, textBase);
         //textBase = textBase + 30;
         //let xBase = 30;
-        //const bonus = this.bonus.getState();
-        //const bonusIndex = bonus.index;
-        //this.context.fillText('Bonus word:', xBase, textBase);
-        //xBase += this.context.measureText('Bonus word:').width;
-        //(bonus.array || []).forEach((item, index)=> {
-        //    if (index <= bonusIndex) {
-        //        this.context.fillStyle = item.fill;
-        //    } else {
-        //        this.context.fillStyle = '#FFFF00';
-        //    }
-        //    this.context.font = '14px Lucida Console';
-        //    xBase += 15;
-        //    this.context.fillText(item.caption.toUpperCase(), xBase, textBase);
-        //}, this);
     }
 }
 export default Game;

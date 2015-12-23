@@ -141,7 +141,7 @@ const GENERAL_OPTIONS = {
     background: '#010223',
     blockColor: '#fff',
     pillColor: {start: '#ffff28', end: '#fd9e09'},
-    bonusColors: ['#69c612', '#a8e62b', '#Feee0e', '#fdab11', '#fb1307'],
+    bonusColors: ['#69c612', '#a8e62b', '#Feee0e', '#fdab11', '#f663d2', '#fb1307'],
     unActiveBonus: '#141534'
 };
 const FONTS = {

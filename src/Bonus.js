@@ -4,18 +4,22 @@ class Bonus {
         this.game = game;
         this.map = map;
         this.bonusString = bonusString;
-        this.index = 0;
         this.resetBonuses();
     }
 
     resetBonuses() {
         this.oldScore = 0;
+        const width = [22,20,17,21,10,4];
         this.bonusArray = this.bonusString.split('').map((bonusItem, index) => {
             return {
                 caption: bonusItem,
-                fill: Level.GENERAL_OPTIONS.bonusColors[index % Level.GENERAL_OPTIONS.bonusColors.length]
+                fill: Level.GENERAL_OPTIONS.bonusColors[index % Level.GENERAL_OPTIONS.bonusColors.length],
+                width: width[(index -1) % width.length]
             }
         });
+        this.index = 0;
+        this.bonusIndex = -1;
+        this.currentBonus = null;
     }
 
     handleBonus(score) {
@@ -60,7 +64,7 @@ class Bonus {
     }
 
     draw(context) {
-        if (this.position) {
+        if (this.position && this.currentBonus) {
             const {x,y} = this.position;
 
             context.fillStyle = this.currentBonus.fill;

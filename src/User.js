@@ -255,7 +255,7 @@ class User {
         ctx.fill();
         ctx.beginPath();
         ctx.fillStyle = GENERAL.color.PACMAN.eye;
-        ctx.arc(eyePos.x, eyePos.y, size / 12, 0, 2 * Math.PI, false);
+        ctx.arc(eyePos.x, eyePos.y, size / 20, 0, 2 * Math.PI, false);
         ctx.fill();
     }
 }

@@ -168,7 +168,7 @@ class Ghost {
         off[GENERAL.DOWN] = [0, f];
 
         context.beginPath();
-        context.fillStyle = "#000";
+        context.fillStyle = '#000';
         context.arc(left + 6 + off[this.direction][0], top + 6 + off[this.direction][1],
             size / 15, 0, 300, false);
         context.arc((left + size) - 6 + off[this.direction][0], top + 6 + off[this.direction][1],
