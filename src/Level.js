@@ -151,8 +151,8 @@ const FONTS = {
         color: '#FFFFFF'
     },
     dialogs: {
-        family: 'Arial',
-        size: 14,
+        family: 'RubrikRegular',
+        size: 20,
         color: '#FFFF00'
     },
     bonus: {

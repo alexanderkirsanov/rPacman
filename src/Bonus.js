@@ -56,7 +56,7 @@ class Bonus {
 
     eatBonus() {
         if (this.index === this.bonusArray.length) {
-            this.game.pause(['Merry Christmas!', 'Press P to continue']);
+            this.game.showCard();
         }
         this.bonusIndex = this.index - 1;
         this.currentBonus = null;

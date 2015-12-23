@@ -31,17 +31,17 @@ class Game {
             this.setState(this.stored);
         } else if (e.keyCode === 80/*P*/) {
             this.pause();
+            this.dialog('Paused');
         } else if (this.state !== GENERAL.PAUSE) {
             return this.user.keyDown(e);
         }
         return true;
     }
 
-    pause(text = 'Paused', font) {
+    pause() {
         this.stored = this.state;
         this.setState(GENERAL.PAUSE);
         this.map.draw(this.context);
-        this.dialog(text, font);
     }
 
     onKeyPress(e) {
@@ -55,7 +55,7 @@ class Game {
         return this.tick;
     }
 
-    dialog(text, font = Level.FONTS.dialogs) {
+    dialog(text, font = Level.FONTS.dialogs, top) {
         this.context.fillStyle = font.color;
         this.context.font = `${font.size}px ${font.family}`;
         if (typeof text !== 'Array') {
@@ -65,9 +65,19 @@ class Game {
             const measure = this.context.measureText(line);
             const width = measure.width,
                 x = ((this.map.width * this.map.blockSize) - width) / 2;
-            this.context.fillText(line, x, (this.map.height * 10) + index * (font.size + 3));
+            this.context.fillText(line, x, top || ((this.map.height * 10) + index * (font.size + 3)));
         });
 
+    }
+
+    showCard(context = this.context) {
+        this.pause();
+        const drawing = new Image();
+        drawing.src = 'resources/title.png';
+        drawing.onload = function () {
+            context.drawImage(drawing, 60, 200);
+        };
+        this.dialog('Press P to continue', Level.FONTS.dialogs, 410);
     }
 
     startLevel() {
@@ -225,14 +235,14 @@ class Game {
 
         this.context.fillStyle = '#FFFF00';
         this.context.font = '14px RubrikRegular';
-        this.context.textAlign='start';
+        this.context.textAlign = 'start';
         this.context.fillText('Score', 40, textBase);
         textBase = textBase + 29;
         this.context.fillStyle = '#FFFFFF';
         this.context.font = '28px RubrikBold';
-        this.context.textAlign='center';
+        this.context.textAlign = 'center';
         this.context.fillText(this.user.getScore(), 55, textBase);
-        this.context.textAlign='start';
+        this.context.textAlign = 'start';
         Array.from({length: this.user.getLives()}).forEach((n, i) => {
             let size = this.map.blockSize,
                 angle = {start: 0.25, end: 1.75, direction: false};
@@ -259,7 +269,7 @@ class Game {
         textBase = topLeft + 12;
         this.context.fillStyle = '#FFFF00';
         this.context.font = '14px RubrikRegular';
-        this.context.textAlign='start';
+        this.context.textAlign = 'start';
         this.context.fillText('Bonus word', 309, textBase);
         textBase = textBase + 29;
         let xBase = 275;
@@ -277,18 +287,14 @@ class Game {
         textBase = topLeft + 12;
         this.context.fillStyle = '#FFFF00';
         this.context.font = '14px RubrikRegular';
-        this.context.textAlign='start';
+        this.context.textAlign = 'start';
         this.context.fillText('Level', 450, textBase);
         textBase = textBase + 29;
         this.context.fillStyle = '#FFFFFF';
         this.context.font = '28px RubrikBold';
-        this.context.textAlign='center';
+        this.context.textAlign = 'center';
         this.context.fillText(String(this.level), 470, textBase);
-        this.context.textAlign='start';
-
-        //this.context.fillText('Level: ' + this.level, this.map.width * this.map.blockSize - 100, textBase);
-        //textBase = textBase + 30;
-        //let xBase = 30;
+        this.context.textAlign = 'start';
     }
 }
 export default Game;
