@@ -217,20 +217,31 @@ class Game {
 
     renderFooter() {
         let topLeft = (this.map.height * this.map.blockSize),
-            textBase = topLeft + 17;
+            textBase = topLeft + 12;
 
         this.context.fillStyle = Level.GENERAL_OPTIONS.background;
         this.context.fillRect(0, topLeft, (this.map.width * this.map.blockSize), 80);
 
         this.context.fillStyle = '#FFFF00';
+        this.context.font = '12px RubrikRegular';
+        this.context.textAlign='start';
+        this.context.fillText('Score', 40, textBase);
+        textBase = textBase + 29;
+        this.context.fillStyle = '#FFFFFF';
+        this.context.font = '26px RubrikRegular';
+        this.context.textAlign='end';
+        this.context.fillText(this.user.getScore(), 90, textBase);
+        this.context.textAlign="start";
+
+
 
         Array.from({length: this.user.getLives()}).forEach((n, i) => {
             let size = this.map.blockSize,
                 angle = {start: 0.25, end: 1.75, direction: false};
             const innerRadius = 0;
             const outerRadius = size / 2;
-            const x = 150 + (25 * i) + this.map.blockSize / 2;
-            const y = (topLeft + 1) + this.map.blockSize / 2;
+            const x = 170 + (25 * i) + this.map.blockSize / 2;
+            const y = textBase - this.map.blockSize / 2;
             const gradient = this.context.createRadialGradient(x - this.map.blockSize * 0.02, y - this.map.blockSize * 0.02, innerRadius, x, y, outerRadius);
             gradient.addColorStop(0, GENERAL.color.PACMAN.start);
             gradient.addColorStop(1, GENERAL.color.PACMAN.end);
@@ -245,26 +256,24 @@ class Game {
             this.context.fill();
         }, this);
 
-        this.context.fillStyle = '#FFFF00';
-        this.context.font = '14px Arial';
-        this.context.fillText('Score: ' + this.user.getScore(), 30, textBase);
-        this.context.fillText('Level: ' + this.level, this.map.width * this.map.blockSize - 100, textBase);
-        textBase = textBase + 30;
-        let xBase = 30;
-        const bonus = this.bonus.getState();
-        const bonusIndex = bonus.index;
-        this.context.fillText('Bonus word:', xBase, textBase);
-        xBase += this.context.measureText('Bonus word:').width;
-        (bonus.array || []).forEach((item, index)=> {
-            if (index <= bonusIndex) {
-                this.context.fillStyle = item.fill;
-            } else {
-                this.context.fillStyle = '#FFFF00';
-            }
-            this.context.font = '14px Lucida Console';
-            xBase += 15;
-            this.context.fillText(item.caption.toUpperCase(), xBase, textBase);
-        }, this);
+
+        //this.context.fillText('Level: ' + this.level, this.map.width * this.map.blockSize - 100, textBase);
+        //textBase = textBase + 30;
+        //let xBase = 30;
+        //const bonus = this.bonus.getState();
+        //const bonusIndex = bonus.index;
+        //this.context.fillText('Bonus word:', xBase, textBase);
+        //xBase += this.context.measureText('Bonus word:').width;
+        //(bonus.array || []).forEach((item, index)=> {
+        //    if (index <= bonusIndex) {
+        //        this.context.fillStyle = item.fill;
+        //    } else {
+        //        this.context.fillStyle = '#FFFF00';
+        //    }
+        //    this.context.font = '14px Lucida Console';
+        //    xBase += 15;
+        //    this.context.fillText(item.caption.toUpperCase(), xBase, textBase);
+        //}, this);
     }
 }
 export default Game;
