@@ -6,15 +6,34 @@
     <script src="pacman.js" defer></script>
     <style type="text/css">
         #pacman {
-            height: 675px;
+            height: 680px;
             width: 513px;
-            margin: 20px auto;
+            margin: 0 0 0 97px;
         }
 
+        #cover {
+            height: 100%;
+            width: 700px;
+            background-color: #010223;
+            margin: 20px 0 0 130px;
+        }
+        #logo {
+            padding-top: 50px;
+            height: 80px;
+            width: 700px;
+            background: #010223 url(resources/reltio-logo.png) no-repeat center center;
+        }
+        html, body {
+            height: 100%;
+        }
         body {
-            width: 513px;
-            margin: 0 auto;
+            margin: 0;
             font-family: sans-serif;
+            background: #010223 url(resources/background.jpg) no-repeat fixed center center;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
         }
 
         a {
@@ -23,6 +42,9 @@
     </style>
 </head>
 <body>
-<div id="pacman"></div>
+<div id="cover">
+    <div id="logo"></div>
+    <div id="pacman"></div>
+</div>
 </body>
 </html>
