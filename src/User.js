@@ -192,21 +192,21 @@ class User {
     }
 
     drawDead(ctx, amount) {
-        let size = this.map.blockSize,
-            half = size / 2;
-
+        let s = this.map.blockSize;
         if (amount >= 1) {
             return;
         }
 
         ctx.fillStyle = '#FFFF00';
-        ctx.beginPath();
-        ctx.moveTo(((this.position.x / 10) * size) + half,
-            ((this.position.y / 10) * size) + half);
+        const x = ((this.position.x / 10) * s) + s / 2;
+        const y = ((this.position.y / 10) * s) + s / 2;
 
-        ctx.arc(((this.position.x / 10) * size) + half,
-            ((this.position.y / 10) * size) + half,
-            half, 0, Math.PI * 2 * amount, true);
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+
+        ctx.arc(x,
+            y,
+            s / 2, 0, Math.PI * 2 * amount, true);
 
         ctx.fill();
     }
@@ -214,17 +214,20 @@ class User {
     draw(ctx) {
         let s = this.map.blockSize,
             angle = this.calcAngle(this.direction, this.position);
-
-        ctx.fillStyle = GENERAL.color.PACMAN;
+        const x = ((this.position.x / 10) * s) + s / 2;
+        const y = ((this.position.y / 10) * s) + s / 2;
+        const innerRadius = 0;
+        const outerRadius = s/2;
+        const gradient = ctx.createRadialGradient(x,y,innerRadius,x,y,outerRadius);
+        gradient.addColorStop(0, GENERAL.color.PACMAN.start);
+        gradient.addColorStop(1, GENERAL.color.PACMAN.end);
+        ctx.fillStyle = gradient;
 
         ctx.beginPath();
 
-        ctx.moveTo(((this.position.x / 10) * s) + s / 2,
-            ((this.position.y / 10) * s) + s / 2);
+        ctx.moveTo(x,y);
 
-        ctx.arc(((this.position.x / 10) * s) + s / 2,
-            ((this.position.y / 10) * s) + s / 2,
-            s / 2, Math.PI * angle.start,
+        ctx.arc(x,y, s / 2, Math.PI * angle.start,
             Math.PI * angle.end, angle.direction);
 
         ctx.fill();

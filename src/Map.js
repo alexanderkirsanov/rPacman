@@ -114,13 +114,14 @@ class Map {
                     context.fillStyle = Level.GENERAL_OPTIONS.background;
                     context.fillRect((j * this.blockSize), (i * this.blockSize),
                         this.blockSize, this.blockSize);
-
-                    context.fillStyle = Level.GENERAL_OPTIONS.pillColor;
-                    context.arc((j * this.blockSize) + this.blockSize / 2,
-                        (i * this.blockSize) + this.blockSize / 2,
-                        Math.abs(5 - (this.pillSize / 3)),
-                        0,
-                        Math.PI * 2, false);
+                    const x = (j * this.blockSize) + this.blockSize / 2;
+                    const y = (i * this.blockSize) + this.blockSize / 2;
+                    const r = Math.abs(5 - (this.pillSize / 3));
+                    const gradient = context.createRadialGradient(x, y, 0, x, y, r);
+                    gradient.addColorStop(0, Level.GENERAL_OPTIONS.pillColor.start);
+                    gradient.addColorStop(1, Level.GENERAL_OPTIONS.pillColor.end);
+                    context.fillStyle = gradient;
+                    context.arc(x, y, r, 0, Math.PI * 2, false);
                     context.fill();
                     context.closePath();
                 }

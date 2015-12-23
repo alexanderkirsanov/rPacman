@@ -127,7 +127,7 @@ const WALLS = [
         {'line': [10.5, 9.5]}]
 ];
 const WALLS_OPTION = {
-    strokeStyle: '#00ffFF',
+    strokeStyle: '#2c2a80',
     lineWidth: 5,
     lineCap: 'round'
 };
@@ -138,10 +138,11 @@ const GHOST_OPTION = {
     COLORS: ['#00FFDE', '#FF0000', '#FFB8DE', '#FFB847']
 };
 const GENERAL_OPTIONS = {
-    background: '#0000ff',
+    background: '#010223',
     blockColor: '#fff',
-    pillColor: '#fff',
-    bonusColors: ['#CC6699', '#CC6666', '#B83D7A', '#8A2E5C', '#2E8A5C']
+    pillColor: {start:'#ffff28', end: '#fd9e09'},
+    bonusColors: ['#69c612', '#a8e62b', '#Feee0e', '#fdab11', '#fb1307'],
+    unActiveBonus: '#141534'
 };
 const FONTS = {
     score: {
