@@ -279,7 +279,7 @@ class Game {
             } else {
                 this.context.fillStyle = '#1d1c43';
             }
-            this.context.font = '30px RubrikMedium';
+            this.context.font = '30px RubrikBold';
             const text = item.caption.toUpperCase();
             xBase += item.width || this.context.measureText(text).width;
             this.context.fillText(text, xBase, textBase);

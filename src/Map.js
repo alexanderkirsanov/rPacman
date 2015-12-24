@@ -101,10 +101,10 @@ class Map {
 
     drawPills(context = this.context) {
         let i, j;
-        if (this.pillSize > 30) {
+        this.pillSize += 0.3;
+        if (this.pillSize > 6) {
             this.pillSize = 0;
         }
-
         for (i = 0; i < this.height; i += 1) {
             for (j = 0; j < this.width; j += 1) {
                 if (this.map[i][j] === PACMAN.PILL) {
@@ -115,7 +115,7 @@ class Map {
                         this.blockSize, this.blockSize);
                     const x = (j * this.blockSize) + this.blockSize / 2;
                     const y = (i * this.blockSize) + this.blockSize / 2;
-                    const r = Math.abs(7 - (this.pillSize / 3));
+                    const r = Math.abs(7 - (this.pillSize / 3))+2;
                     const gradient = context.createRadialGradient(x, y, 0, x, y, r);
                     gradient.addColorStop(0, Level.GENERAL_OPTIONS.pillColor.start);
                     gradient.addColorStop(0.7, Level.GENERAL_OPTIONS.pillColor.end);
