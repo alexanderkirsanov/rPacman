@@ -11,7 +11,7 @@ module.exports = {
         publicPath: '/',
         filename: 'pacman.js'
     },
-    debug: true,
+    //debug: true,
     devtool: 'source-map',
     module: {
         loaders: [
