@@ -7,6 +7,7 @@ class Map {
         this.context = context;
         this.blockSize = size;
         this.pillSize = 0;
+        this.pillSizeCounter = 0.3;
         this.reset();
     }
 
@@ -101,9 +102,9 @@ class Map {
 
     drawPills(context = this.context) {
         let i, j;
-        this.pillSize += 0.3;
-        if (this.pillSize > 6) {
-            this.pillSize = 0;
+        this.pillSize += this.pillSizeCounter;
+        if (this.pillSize > 6 || this.pillSize < 0.3) {
+            this.pillSizeCounter = -this.pillSizeCounter;
         }
         for (i = 0; i < this.height; i += 1) {
             for (j = 0; j < this.width; j += 1) {
